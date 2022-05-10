@@ -100,19 +100,7 @@ function SelectAll(props: SelectAllProps) {
     onChange,
     rowSpace,
   } = props;
-  return (
-    <StyledCheckbox
-      accentColor={accentColor}
-      checked={checked}
-      className="select-all"
-      disabled={disabled}
-      indeterminate={indeterminate}
-      inline={inline}
-      label="Select All"
-      onChange={onChange}
-      rowSpace={rowSpace}
-    />
-  );
+  return null;
 }
 
 export interface CheckboxGroupComponentProps extends ComponentProps {
@@ -219,22 +207,6 @@ function CheckboxGroupComponent(props: CheckboxGroupComponentProps) {
             rowSpace={rowSpace}
           />
         )}
-        {options &&
-          options.length > 0 &&
-          [...options].map((option: OptionProps) => (
-            <StyledCheckbox
-              accentColor={accentColor}
-              borderRadius={borderRadius}
-              checked={(selectedValues || []).includes(option.value)}
-              disabled={isDisabled}
-              indeterminate={isDisabled ? true : undefined}
-              inline={isInline}
-              key={generateReactKey()}
-              label={option.label}
-              onChange={onChange(option.value)}
-              rowSpace={rowSpace}
-            />
-          ))}
       </InputContainer>
     </CheckboxGroupContainer>
   );
