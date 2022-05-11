@@ -350,6 +350,7 @@ class ButtonWidget extends BaseWidget<ButtonWidgetProps, ButtonWidgetState> {
   getPageView() {
     return (
       <ButtonComponent
+        // @ts-ignore
         borderRadius={this.props.borderRadius}
         boxShadow={this.props.boxShadow}
         buttonColor={this.props.buttonColor}

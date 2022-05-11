@@ -1,7 +1,3 @@
-/**
- * TEAM: frontend_infra
- * @flow strict
- */
 /* eslint-disable react/prefer-stateless-function */
 
 import * as React from "react";
@@ -18,7 +14,7 @@ import iconSizes from "./iconSizes";
  *
  * Our current icon list can be accessed from our [Icon Guidelines](/design/components/iconography/system-icons).
  * @extends React.Component */
-class Icon extends React.PureComponent<Props> {
+class Icon extends React.PureComponent {
   static defaultProps = {
     alignment: "baseline",
     isARIAAccessible: false,

@@ -1,17 +1,9 @@
 import * as React from "react";
-import { css } from "aphrodite";
+import { css as css2 } from "aphrodite";
 import { getButtonStyle, sharedStyles } from "./utils";
-// import ThemeNameContext, {type Theme} from "../context/ThemeNameContext";
-// import type {LoadingState} from "./useLoadingManager";
 import Loader from "./Loader";
 import Icon from "./Icon";
-// import invariant from "../tools/invariant";
-// import stringOrFalse from "../tools/stringOrFalse";
-
-export type ButtonIntent = "basic" | "danger" | "none";
-export type ButtonKind = "solid" | "hollow" | "bare" | "blank";
-export type ButtonSize = "s" | "m" | "l";
-export type ButtonWidth = "responsive" | "full";
+import invariant from "./utils";
 
 /**
  * @short Buttons represent actions that trigger states, launch new UI, or link the user to new locations.
@@ -19,7 +11,7 @@ export type ButtonWidth = "responsive" | "full";
  * @status Stable
  * @category Interaction
  * @extends React.Component */
-export default class Button extends React.PureComponent<Props, State> {
+export default class Button extends React.PureComponent {
   static defaultProps = {
     intent: "none",
     kind: "hollow",
@@ -30,7 +22,7 @@ export default class Button extends React.PureComponent<Props, State> {
     isLoading: false,
   };
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     validateProps(props);
   }
@@ -38,17 +30,29 @@ export default class Button extends React.PureComponent<Props, State> {
   render() {
     const {
       children,
+      // @ts-ignore
       label: _label,
+      // @ts-ignore
       type,
+      // @ts-ignore
       intent,
+      // @ts-ignore
       kind,
+      // @ts-ignore
       size,
+      // @ts-ignore
       onClick,
+      // @ts-ignore
       onMouseDown,
+      // @ts-ignore
       onMouseUp,
+      // @ts-ignore
       disabled,
+      // @ts-ignore
       width,
+      // @ts-ignore
       isLoading,
+      // @ts-ignore
       dataQaId,
     } = this.props;
 
@@ -63,11 +67,11 @@ export default class Button extends React.PureComponent<Props, State> {
         isLoading: !!isLoading,
       },
     );
-    const label = stringOrFalse(_label);
+    const label = _label;
 
     return (
       <button
-        className={css(...styles.button)}
+        className={css2(...styles.button)}
         type={type}
         onClick={onClick}
         onMouseDown={onMouseDown}
@@ -76,14 +80,14 @@ export default class Button extends React.PureComponent<Props, State> {
         data-qa-id={dataQaId}
       >
         {getLoader(isLoading, size)}
-        <div className={css(...styles.label)}>{label || children}</div>
+        <div className={css2(...styles.label)}>{label || children}</div>
       </button>
     );
   }
 }
 
-const getLoader = (loaderState: LoadingState, size: ButtonSize) => {
-  const getLoaderSize = (buttonSize: ButtonSize): number => {
+const getLoader = (loaderState: any, size: any) => {
+  const getLoaderSize = (buttonSize: any) => {
     if (buttonSize === "s") {
       return 18;
     }
@@ -95,6 +99,7 @@ const getLoader = (loaderState: LoadingState, size: ButtonSize) => {
     return null;
   }
 
+  // @ts-ignore
   const loaderIndicator = <Loader loaded={false} size={getLoaderSize(size)} />;
 
   const successIndicator = (
@@ -105,6 +110,7 @@ const getLoader = (loaderState: LoadingState, size: ButtonSize) => {
     <Icon iconName="cancel" alignment="center" color="grey40" />
   );
 
+  // @ts-ignore
   const stateToIndicatorMap = new Map([
     [true, loaderIndicator],
     ["success", successIndicator],
@@ -112,13 +118,14 @@ const getLoader = (loaderState: LoadingState, size: ButtonSize) => {
   ]);
 
   return (
-    <div className={css(sharedStyles.loaderContainer)}>
+    <div className={css2(sharedStyles.loaderContainer)}>
       {stateToIndicatorMap.get(loaderState)}
     </div>
   );
 };
 
-const validateProps = ({ kind, intent }: $Shape<Props>): void => {
+// @ts-ignore
+const validateProps = ({ kind, intent }) => {
   invariant(
     !(kind === "solid" && intent === "none"),
     "Solid buttons must have an intent!",
@@ -127,7 +134,7 @@ const validateProps = ({ kind, intent }: $Shape<Props>): void => {
 
 // End of Copy from Latitude
 
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { css, createGlobalStyle } from "styled-components";
 import Interweave from "interweave";
 import {
   IButtonProps,
@@ -225,11 +232,9 @@ font-weight: ${(props) => props.theme.fontWeights[2]};
 outline: none;
 padding: 0px 10px;
 gap: 8px;
-
 &:hover, &:active {
   ${buttonHoverActiveStyles}
  }
-
 ${({ buttonColor, buttonVariant, theme }) => `
     background: ${
       getCustomBackgroundColor(buttonVariant, buttonColor) !== "none"
@@ -238,8 +243,6 @@ ${({ buttonColor, buttonVariant, theme }) => `
         ? theme.colors.button.primary.primary.bgColor
         : "none"
     } !important;
-
-
     &:disabled, &.${Classes.DISABLED} {
     cursor: not-allowed;
     background-color: ${Colors.GREY_1} !important;
@@ -247,12 +250,10 @@ ${({ buttonColor, buttonVariant, theme }) => `
     box-shadow: none !important;
     pointer-events: none;
     border-color: ${Colors.GREY_1} !important;
-
     > span {
       color: ${Colors.GREY_9} !important;
     }
   }
-
   border: ${
     getCustomBorderColor(buttonVariant, buttonColor) !== "none"
       ? `1px solid ${getCustomBorderColor(buttonVariant, buttonColor)}`
@@ -260,11 +261,9 @@ ${({ buttonColor, buttonVariant, theme }) => `
       ? `1px solid ${theme.colors.button.primary.secondary.borderColor}`
       : "none"
   } !important;
-
   & > * {
     margin-right: 0;
   }
-
   & > span {
     max-height: 100%;
     max-width: 99%;
@@ -274,7 +273,6 @@ ${({ buttonColor, buttonVariant, theme }) => `
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     line-height: normal;
-
     color: ${
       buttonVariant === ButtonVariantTypes.PRIMARY
         ? getComplementaryGrayscaleColor(buttonColor)
@@ -282,10 +280,8 @@ ${({ buttonColor, buttonVariant, theme }) => `
     } !important;
   }
 `}
-
 border-radius: ${({ borderRadius }) => borderRadius};
 box-shadow: ${({ boxShadow }) => `${boxShadow ?? "none"}`} !important;
-
 ${({ placement }) =>
   placement
     ? `
@@ -424,8 +420,8 @@ function RecaptchaV2Component(
     handleError: (event: React.MouseEvent<HTMLElement>, error: string) => void;
   } & RecaptchaProps,
 ) {
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [isInvalidKey, setInvalidKey] = useState(false);
+  const recaptchaRef = React.useRef<ReCAPTCHA>(null);
+  const [isInvalidKey, setInvalidKey] = React.useState(false);
   const handleRecaptchaLoading = (isloading: boolean) => {
     props.handleRecaptchaV2Loading && props.handleRecaptchaV2Loading(isloading);
   };
