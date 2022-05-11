@@ -1,10 +1,137 @@
-import React, { useRef, useState } from "react";
-import styled, { createGlobalStyle, css } from "styled-components";
+import * as React from "react";
+import { css } from "aphrodite";
+import { getButtonStyle, sharedStyles } from "./utils";
+// import ThemeNameContext, {type Theme} from "../context/ThemeNameContext";
+// import type {LoadingState} from "./useLoadingManager";
+import Loader from "./Loader";
+import Icon from "./Icon";
+// import invariant from "../tools/invariant";
+// import stringOrFalse from "../tools/stringOrFalse";
+
+export type ButtonIntent = "basic" | "danger" | "none";
+export type ButtonKind = "solid" | "hollow" | "bare" | "blank";
+export type ButtonSize = "s" | "m" | "l";
+export type ButtonWidth = "responsive" | "full";
+
+/**
+ * @short Buttons represent actions that trigger states, launch new UI, or link the user to new locations.
+ * @brandStatus V2
+ * @status Stable
+ * @category Interaction
+ * @extends React.Component */
+export default class Button extends React.PureComponent<Props, State> {
+  static defaultProps = {
+    intent: "none",
+    kind: "hollow",
+    size: "m",
+    width: "responsive",
+    disabled: false,
+    type: "button",
+    isLoading: false,
+  };
+
+  constructor(props) {
+    super(props);
+    validateProps(props);
+  }
+
+  render() {
+    const {
+      children,
+      label: _label,
+      type,
+      intent,
+      kind,
+      size,
+      onClick,
+      onMouseDown,
+      onMouseUp,
+      disabled,
+      width,
+      isLoading,
+      dataQaId,
+    } = this.props;
+
+    const styles = getButtonStyle(
+      this.context,
+      kind,
+      intent,
+      size,
+      width,
+      disabled,
+      {
+        isLoading: !!isLoading,
+      },
+    );
+    const label = stringOrFalse(_label);
+
+    return (
+      <button
+        className={css(...styles.button)}
+        type={type}
+        onClick={onClick}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        disabled={disabled || isLoading}
+        data-qa-id={dataQaId}
+      >
+        {getLoader(isLoading, size)}
+        <div className={css(...styles.label)}>{label || children}</div>
+      </button>
+    );
+  }
+}
+
+const getLoader = (loaderState: LoadingState, size: ButtonSize) => {
+  const getLoaderSize = (buttonSize: ButtonSize): number => {
+    if (buttonSize === "s") {
+      return 18;
+    }
+
+    return 24;
+  };
+
+  if (loaderState === false) {
+    return null;
+  }
+
+  const loaderIndicator = <Loader loaded={false} size={getLoaderSize(size)} />;
+
+  const successIndicator = (
+    <Icon iconName="check" alignment="center" color="grey40" />
+  );
+
+  const failureIndicator = (
+    <Icon iconName="cancel" alignment="center" color="grey40" />
+  );
+
+  const stateToIndicatorMap = new Map([
+    [true, loaderIndicator],
+    ["success", successIndicator],
+    ["failure", failureIndicator],
+  ]);
+
+  return (
+    <div className={css(sharedStyles.loaderContainer)}>
+      {stateToIndicatorMap.get(loaderState)}
+    </div>
+  );
+};
+
+const validateProps = ({ kind, intent }: $Shape<Props>): void => {
+  invariant(
+    !(kind === "solid" && intent === "none"),
+    "Solid buttons must have an intent!",
+  );
+};
+
+// End of Copy from Latitude
+
+import styled, { createGlobalStyle } from "styled-components";
 import Interweave from "interweave";
 import {
   IButtonProps,
   MaybeElement,
-  Button,
   Alignment,
   Position,
   Classes,
@@ -484,4 +611,4 @@ function ButtonComponent(props: ButtonComponentProps & RecaptchaProps) {
   }
 }
 
-export default ButtonComponent;
+export { ButtonComponent };

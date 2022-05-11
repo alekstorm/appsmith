@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Alignment } from "@blueprintjs/core";
-
 import { Classes } from "@blueprintjs/core";
 import { ComponentProps } from "widgets/BaseComponent";
 import { ThemeProp } from "components/ads/common";
@@ -100,7 +99,19 @@ function SelectAll(props: SelectAllProps) {
     onChange,
     rowSpace,
   } = props;
-  return null;
+  return (
+    <StyledCheckbox
+      accentColor={accentColor}
+      checked={checked}
+      className="select-all"
+      disabled={disabled}
+      indeterminate={indeterminate}
+      inline={inline}
+      label="Select All"
+      onChange={onChange}
+      rowSpace={rowSpace}
+    />
+  );
 }
 
 export interface CheckboxGroupComponentProps extends ComponentProps {
@@ -207,6 +218,22 @@ function CheckboxGroupComponent(props: CheckboxGroupComponentProps) {
             rowSpace={rowSpace}
           />
         )}
+        {options &&
+          options.length > 0 &&
+          [...options].map((option: OptionProps) => (
+            <StyledCheckbox
+              accentColor={accentColor}
+              borderRadius={borderRadius}
+              checked={(selectedValues || []).includes(option.value)}
+              disabled={isDisabled}
+              indeterminate={isDisabled ? true : undefined}
+              inline={isInline}
+              key={generateReactKey()}
+              label={option.label}
+              onChange={onChange(option.value)}
+              rowSpace={rowSpace}
+            />
+          ))}
       </InputContainer>
     </CheckboxGroupContainer>
   );

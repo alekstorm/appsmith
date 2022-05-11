@@ -1,55 +1,4 @@
 import { StyleSheet, css } from "aphrodite";
-// const { css, StyleSheet } = Aphrodite;
-// import latitudeColors from "./colors";
-// import Text from "./Text";
-
-const latitudeColors = Object.freeze({
-  black: "#272C34",
-  white: "#FFFFFF",
-  grey10: "#F7F9FD",
-  grey20: "#DAE3F3",
-  grey30: "#C5D2E7",
-  grey40: "#67768D",
-  grey50: "#4B5564",
-  grey60: "#39414D",
-  red10: "#FFF5F5",
-  red20: "#FDA6A6",
-  red30: "#FA5959",
-  red40: "#D92736",
-  red50: "#BA0202",
-  red60: "#800000",
-  orange10: "#FFF7F0",
-  orange20: "#FAC69D",
-  orange30: "#F5954D",
-  orange40: "#DA5A00",
-  orange50: "#A64300",
-  orange60: "#5C2500",
-  blue10: "#F5FCFF",
-  blue20: "#C2E0EF",
-  blue30: "#94C1DF",
-  blue40: "#6294BE",
-  blue50: "#326089",
-  blue60: "#0F2943",
-  green10: "#F5FFFC",
-  green20: "#BAF8EA",
-  green30: "#82F2DA",
-  green40: "#45DABE",
-  green50: "#11B08F",
-  green60: "#008062",
-  purple10: "#F9F5FF",
-  purple20: "#CEA1FA",
-  purple30: "#AF50F5",
-  purple40: "#9200DA",
-  purple50: "#7700A6",
-  purple60: "#43005C",
-  indigo10: "#F5F6FF",
-  indigo20: "#A2ACF2",
-  indigo30: "#566AE5",
-  indigo40: "#0723D8",
-  indigo50: "#031ABA",
-  indigo60: "#00108C",
-});
-
 /**
  * @short Select options in a flexible way.
  * @brandStatus V2
@@ -128,9 +77,9 @@ class Checkbox extends React.PureComponent<any> {
   }
 }
 
-const checkedFill = latitudeColors.grey60;
-const disabledEmptyFill = latitudeColors.grey10;
-const disabledMarkedFill = latitudeColors.grey20;
+const checkedFill = Colors.grey60;
+const disabledEmptyFill = Colors.grey10;
+const disabledMarkedFill = Colors.grey20;
 
 const styles = StyleSheet.create({
   label: {
@@ -140,21 +89,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     ":hover input": {
-      borderColor: latitudeColors.grey50,
+      borderColor: Colors.grey50,
       boxShadow: "0 2px 2px rgba(0, 0, 0, 0.05)",
     },
     ":active input": {
-      borderColor: latitudeColors.grey50,
-      background: latitudeColors.grey50,
+      borderColor: Colors.grey50,
+      background: Colors.grey50,
       boxShadow: "none",
     },
     ":hover input:checked": {
       borderColor: "transparent",
-      backgroundColor: latitudeColors.grey60,
+      backgroundColor: Colors.grey60,
     },
     ":active input:checked": {
       borderColor: "transparent",
-      background: latitudeColors.grey60,
+      background: Colors.grey60,
       boxShadow: "none",
     },
   },
@@ -162,9 +111,9 @@ const styles = StyleSheet.create({
     cursor: "pointer",
     boxSizing: "border-box",
     appearance: "none",
-    backgroundColor: latitudeColors.white,
+    backgroundColor: Colors.white,
     outline: "none",
-    border: `2px solid ${latitudeColors.grey30}`,
+    border: `2px solid ${Colors.grey30}`,
     width: "20px",
     height: "20px",
     minWidth: "20px",
@@ -174,8 +123,8 @@ const styles = StyleSheet.create({
     transitionDuration: "150ms",
     transform: "ease-in-out",
     ":focus": {
-      borderColor: latitudeColors.grey50,
-      boxShadow: `0 0 0 3px ${latitudeColors.grey30}`,
+      borderColor: Colors.grey50,
+      boxShadow: `0 0 0 3px ${Colors.grey30}`,
     },
     ":checked": {
       background: `${checkedFill} url("data:image/svg+xml,%3Csvg width='16px' height='16px' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cpath d='M61.964,16.52 L23.778,54.706 C23.3853277,55.0977362 22.7496723,55.0977362 22.357,54.706 L16.557,48.906 L2.294,34.641 C1.90226377,34.2483277 1.90226377,33.6126723 2.294,33.22 L7.979,27.536 C8.37167233,27.1442638 9.00732767,27.1442638 9.4,27.536 L22.948,41.084 L54.738,9.294 C55.1306723,8.90226377 55.7663277,8.90226377 56.159,9.294 L61.964,15.1 C62.3550716,15.4925567 62.3550716,16.1274433 61.964,16.52 Z' fill='%23fff' %3E%3C/path%3E%3C/svg%3E") no-repeat center`,
@@ -199,48 +148,48 @@ const styles = StyleSheet.create({
   },
   disabled: {
     pointerEvents: "none",
-    color: latitudeColors.grey40,
+    color: Colors.grey40,
     ":hover input": {
-      borderColor: latitudeColors.grey20,
+      borderColor: Colors.grey20,
       backgroundColor: disabledEmptyFill,
       boxShadow: "none",
     },
     ":active input": {
-      borderColor: latitudeColors.grey20,
+      borderColor: Colors.grey20,
       backgroundColor: disabledEmptyFill,
       boxShadow: "none",
     },
   },
   disabledInput: {
-    borderColor: latitudeColors.grey20,
+    borderColor: Colors.grey20,
     backgroundColor: disabledEmptyFill,
     ":checked": {
-      borderColor: latitudeColors.grey20,
+      borderColor: Colors.grey20,
       backgroundColor: disabledMarkedFill,
     },
   },
   invalid: {
-    color: latitudeColors.red40,
+    color: Colors.red40,
     ":hover input": {
-      borderColor: latitudeColors.red40,
+      borderColor: Colors.red40,
     },
     ":active input": {
-      borderColor: latitudeColors.red40,
-      backgroundColor: latitudeColors.red40,
+      borderColor: Colors.red40,
+      backgroundColor: Colors.red40,
       boxShadow: "none",
     },
     ":hover input:checked": {
-      backgroundColor: latitudeColors.red40,
+      backgroundColor: Colors.red40,
     },
   },
   invalidInput: {
-    borderColor: latitudeColors.red40,
+    borderColor: Colors.red40,
     ":checked": {
-      backgroundColor: latitudeColors.red40,
+      backgroundColor: Colors.red40,
     },
     ":focus": {
-      boxShadow: `0 0 0 3px ${latitudeColors.red20}`,
-      borderColor: latitudeColors.red40,
+      boxShadow: `0 0 0 3px ${Colors.red20}`,
+      borderColor: Colors.red40,
     },
   },
   radioLabelNoWrap: {
