@@ -14,6 +14,7 @@ import { Colors } from "constants/Colors";
 
 export const buttonHoverActiveStyles = css<ButtonContainerProps>`
   ${({ buttonColor, buttonVariant, disabled, loading, theme }) => {
+    return "";
     if (!disabled && !loading) {
       return `
         background: ${
@@ -49,8 +50,8 @@ const styles = (theme: any, intent: any) => {
       borderRadius: "0",
       ...typeScale.base,
       fontWeight: fontWeights.bold,
-      ...include(padding.h.m),
-      ...include(padding.v.n),
+      ...padding.h.m,
+      ...padding.v.n,
       whiteSpace: "nowrap",
       outline: "none",
       maxWidth: "100%",
@@ -128,7 +129,7 @@ const styles = (theme: any, intent: any) => {
       boxShadow: "none",
       border: "none",
       height: "100%",
-      ...include(padding.a.n),
+      ...padding.a.n,
       ":after": {
         content: '""',
         position: "absolute",
@@ -310,9 +311,10 @@ export const getButtonStyle = (
 ) => {
   const isLoading = optionals ? optionals.isLoading || false : false;
 
-  const styleSheet = styles("Base", intent);
+  const styleSheet = styles("base", intent);
 
-  const buttonStyles = [
+  const buttonStyles = Object.assign(
+    {},
     // @ts-ignore
     styleSheet.button.base,
     // @ts-ignore
@@ -321,29 +323,49 @@ export const getButtonStyle = (
     styleSheet.button[kind],
     // @ts-ignore
     styleSheet.button[width],
-    // @ts-ignore
-    disabled ? styleSheet.disabledButton.base : null,
-    // @ts-ignore
-    disabled ? styleSheet.disabledButton[kind] : null,
-    // @ts-ignore
-    isLoading ? styleSheet.button.isLoading : null,
-  ];
+  );
 
-  const labelStyles = [
-    // @ts-ignore
+  // const buttonStyles = [
+  //   // @ts-ignore
+  //   styleSheet.button.base,
+  //   // @ts-ignore
+  //   styleSheet.button[size],
+  //   // @ts-ignore
+  //   styleSheet.button[kind],
+  //   // @ts-ignore
+  //   styleSheet.button[width],
+  //   // // @ts-ignore
+  //   // disabled ? styleSheet.disabledButton.base : null,
+  //   // // @ts-ignore
+  //   // disabled ? styleSheet.disabledButton[kind] : null,
+  //   // // @ts-ignore
+  //   // isLoading ? styleSheet.button.isLoading : null,
+  // ];
+
+  const labelStyles = Object.assign(
+    {},
     styleSheet.label.base,
     // @ts-ignore
     styleSheet.label[kind],
-    // @ts-ignore
-    disabled ? styleSheet.disabledLabel[kind] : null,
-    // @ts-ignore
-    isLoading ? styleSheet.label.isLoading : null,
-  ];
+  );
 
-  return {
+  // const labelStyles = [
+  //   // @ts-ignore
+  //   styleSheet.label.base,
+  //   // @ts-ignore
+  //   styleSheet.label[kind],
+  //   // // @ts-ignore
+  //   // disabled ? styleSheet.disabledLabel[kind] : null,
+  //   // // @ts-ignore
+  //   // isLoading ? styleSheet.label.isLoading : null,
+  // ];
+
+  const foo = {
     button: buttonStyles,
     label: labelStyles,
   };
+  console.log({ foo });
+  return foo;
 };
 
 export const sharedStyles = {
@@ -381,7 +403,8 @@ export function include(style: any) {
   if (style == null) {
     return {};
   }
-  invariant(style._definition != null, "Style must have a definition");
+  console.log({ style });
+  // invariant(style._definition != null, "Style must have a definition");
   return style._definition;
 }
 

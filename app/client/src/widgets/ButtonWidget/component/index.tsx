@@ -1,9 +1,21 @@
 import * as React from "react";
-import { css as css2 } from "aphrodite";
+import { css as css2, StyleSheet } from "aphrodite";
 import { getButtonStyle, sharedStyles } from "./utils";
 import Loader from "./Loader";
 import Icon from "./Icon";
 import invariant from "./utils";
+
+const yo = getButtonStyle(
+  "Base",
+  "solid",
+  "basic",
+  "m",
+  "responsive",
+  false,
+  {},
+);
+
+const myStyles = StyleSheet.create(yo);
 
 /**
  * @short Buttons represent actions that trigger states, launch new UI, or link the user to new locations.
@@ -11,7 +23,7 @@ import invariant from "./utils";
  * @status Stable
  * @category Interaction
  * @extends React.Component */
-export default class Button extends React.PureComponent {
+class Button extends React.PureComponent {
   static defaultProps = {
     intent: "none",
     kind: "hollow",
@@ -31,7 +43,7 @@ export default class Button extends React.PureComponent {
     const {
       children,
       // @ts-ignore
-      label: _label,
+      label,
       // @ts-ignore
       type,
       // @ts-ignore
@@ -67,11 +79,10 @@ export default class Button extends React.PureComponent {
         isLoading: !!isLoading,
       },
     );
-    const label = _label;
 
     return (
       <button
-        className={css2(...styles.button)}
+        className={css2(myStyles.button)}
         type={type}
         onClick={onClick}
         onMouseDown={onMouseDown}
@@ -80,7 +91,7 @@ export default class Button extends React.PureComponent {
         data-qa-id={dataQaId}
       >
         {getLoader(isLoading, size)}
-        <div className={css2(...styles.label)}>{label || children}</div>
+        <div className={css2(myStyles.label)}>{label || children}</div>
       </button>
     );
   }
@@ -226,84 +237,38 @@ const TooltipStyles = createGlobalStyle`
 */
 
 const buttonBaseStyle = css<ThemeProp & ButtonStyleProps>`
-height: 100%;
-background-image: none !important;
-font-weight: ${(props) => props.theme.fontWeights[2]};
-outline: none;
-padding: 0px 10px;
-gap: 8px;
-&:hover, &:active {
-  ${buttonHoverActiveStyles}
- }
-${({ buttonColor, buttonVariant, theme }) => `
-    background: ${
-      getCustomBackgroundColor(buttonVariant, buttonColor) !== "none"
-        ? getCustomBackgroundColor(buttonVariant, buttonColor)
-        : buttonVariant === ButtonVariantTypes.PRIMARY
-        ? theme.colors.button.primary.primary.bgColor
-        : "none"
-    } !important;
-    &:disabled, &.${Classes.DISABLED} {
-    cursor: not-allowed;
-    background-color: ${Colors.GREY_1} !important;
-    color: ${Colors.GREY_9} !important;
-    box-shadow: none !important;
-    pointer-events: none;
-    border-color: ${Colors.GREY_1} !important;
-    > span {
-      color: ${Colors.GREY_9} !important;
-    }
-  }
-  border: ${
-    getCustomBorderColor(buttonVariant, buttonColor) !== "none"
-      ? `1px solid ${getCustomBorderColor(buttonVariant, buttonColor)}`
-      : buttonVariant === ButtonVariantTypes.SECONDARY
-      ? `1px solid ${theme.colors.button.primary.secondary.borderColor}`
-      : "none"
-  } !important;
-  & > * {
-    margin-right: 0;
-  }
-  & > span {
-    max-height: 100%;
-    max-width: 99%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    line-height: normal;
-    color: ${
-      buttonVariant === ButtonVariantTypes.PRIMARY
-        ? getComplementaryGrayscaleColor(buttonColor)
-        : getCustomBackgroundColor(ButtonVariantTypes.PRIMARY, buttonColor)
-    } !important;
-  }
-`}
-border-radius: ${({ borderRadius }) => borderRadius};
-box-shadow: ${({ boxShadow }) => `${boxShadow ?? "none"}`} !important;
-${({ placement }) =>
-  placement
-    ? `
-    justify-content: ${getCustomJustifyContent(placement)};
-    & > span.bp3-button-text {
-      flex: unset !important;
-    }
-  `
-    : ""}
+  height: 100%;
+  background-image: none !important;
+  font-weight: ${(props) => props.theme.fontWeights[2]};
+  outline: none;
+  padding: 0px 10px;
+  gap: 8px;
+  border-radius: ${({ borderRadius }) => borderRadius};
+  box-shadow: ${({ boxShadow }) => `${boxShadow ?? "none"}`} !important;
+  ${({ placement }) =>
+    placement
+      ? `
+      justify-content: ${getCustomJustifyContent(placement)};
+      & > span.bp3-button-text {
+        flex: unset !important;
+      }
+    `
+      : ""}
 `;
 
-export const StyledButton = styled((props) => (
-  <Button
-    {..._.omit(props, [
-      "borderRadius",
-      "boxShadow",
-      "boxShadowColor",
-      "buttonColor",
-      "buttonVariant",
-    ])}
-  />
-))<ThemeProp & ButtonStyleProps>`
+export const StyledButton = styled((props) => {
+  return (
+    <Button
+      {..._.omit(props, [
+        "borderRadius",
+        "boxShadow",
+        "boxShadowColor",
+        "buttonColor",
+        "buttonVariant",
+      ])}
+    />
+  );
+})<ThemeProp & ButtonStyleProps>`
   ${buttonBaseStyle}
 `;
 
@@ -342,7 +307,6 @@ export function BaseButton(props: IButtonProps & ButtonStyleProps) {
 
   return (
     <DragContainer
-      buttonColor={buttonColor}
       buttonVariant={buttonVariant}
       disabled={disabled}
       loading={loading}
@@ -365,14 +329,14 @@ export function BaseButton(props: IButtonProps & ButtonStyleProps) {
         onClick={onClick}
         placement={placement}
         rightIcon={isRightAlign ? iconName || rightIcon : rightIcon}
-        text={text}
+        label={text}
       />
     </DragContainer>
   );
 }
 
 BaseButton.defaultProps = {
-  buttonColor: Colors.GREEN,
+  buttonColor: Colors.RED,
   buttonVariant: ButtonVariantTypes.PRIMARY,
   disabled: false,
   text: "Button Text",
@@ -557,7 +521,9 @@ function BtnWrapper(
 }
 
 // To be used with the canvas
-function ButtonComponent(props: ButtonComponentProps & RecaptchaProps) {
+export default function ButtonComponent(
+  props: ButtonComponentProps & RecaptchaProps,
+) {
   const btnWrapper = (
     <BtnWrapper
       clickWithRecaptcha={props.clickWithRecaptcha}
@@ -606,5 +572,3 @@ function ButtonComponent(props: ButtonComponentProps & RecaptchaProps) {
     return btnWrapper;
   }
 }
-
-export { ButtonComponent };
