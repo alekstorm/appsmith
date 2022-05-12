@@ -14,7 +14,7 @@ const spacing = {
   l: 12,
 };
 
-import { StyleSheet, css } from "aphrodite";
+import { StyleSheet, css as css2 } from "aphrodite";
 import { Colors } from "constants/Colors";
 
 export default function Pill({ text = "" /*, size = "m" */ }) {
@@ -25,7 +25,7 @@ export default function Pill({ text = "" /*, size = "m" */ }) {
   };
 
   return (
-    <span className={css(styles.pill)} style={style}>
+    <span className={css2(styles.pill)} style={style}>
       {text}
     </span>
   );

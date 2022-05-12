@@ -50,12 +50,12 @@ class TextWidget extends BaseWidget<TextWidgetProps, WidgetState> {
 
   static getDerivedPropertiesMap(): DerivedPropertiesMap {
     return {
-      value: `{{ this.text }}`,
+      value: `{{ this.pill }}`,
     };
   }
 
   static getWidgetType() {
-    return "TEXT_WIDGET";
+    return "PILL_WIDGET";
   }
 }
 
