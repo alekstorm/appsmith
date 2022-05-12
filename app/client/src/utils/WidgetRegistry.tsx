@@ -138,6 +138,7 @@ import TabsMigratorWidget, {
 } from "widgets/TabsMigrator";
 import TabsWidget, { CONFIG as TABS_WIDGET_CONFIG } from "widgets/TabsWidget";
 import TextWidget, { CONFIG as TEXT_WIDGET_CONFIG } from "widgets/TextWidget";
+import PillWidget, { CONFIG as PILL_WIDGET_CONFIG } from "widgets/PillWidget";
 import VideoWidget, {
   CONFIG as VIDEO_WIDGET_CONFIG,
 } from "widgets/VideoWidget";
@@ -201,6 +202,7 @@ export const ALL_WIDGETS_AND_CONFIG = [
   [CurrencyInputWidget, CURRENCY_INPUT_WIDGET_V2_CONFIG],
   [JSONFormWidget, JSON_FORM_WIDGET_CONFIG],
   [ProgressWidget, PROGRESS_WIDGET_CONFIG],
+  [PillWidget, PILL_WIDGET_CONFIG],
   /*
    * If a newly added widget works well inside the list widget,
    * please add widget type in the List widget's allowed widget
